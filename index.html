@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Force Quit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="authGate" class="auth-gate">
+      <div class="auth-container">
+        <div class="auth-glow"></div>
+        <div class="auth-panel">
+          <div class="auth-header">
+            <div class="auth-icon">🎮</div>
+            <h2>Force Quit</h2>
+            <p class="auth-subtitle">Level up your real life. One clean day at a time.</p>
+          </div>
+          <div class="auth-content">
+            <p class="auth-prompt">Save your progress with Gmail</p>
+            <input id="authGmailInput" type="email" placeholder="Gmail address" class="auth-input" />
+            <input id="authPasswordInput" type="password" placeholder="Password" class="auth-input" />
+            <div class="auth-btn-row">
+              <button id="signUpBtn" class="auth-btn auth-btn-primary">Sign Up</button>
+              <button id="logInBtn" class="auth-btn auth-btn-secondary">Log In</button>
+            </div>
+            <div class="auth-divider">or</div>
+            <button id="guestModeBtn" class="auth-btn auth-btn-guest">Continue as Guest</button>
+            <p class="auth-note">💡 Build your future with honesty and consistency</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="appShell" class="page-shell app-hidden">
+      <header class="hero">
+        <div class="brand">
+          <img src="logo.png" alt="Force Quit logo" class="brand-logo" />
+          <div>
+            <h1>FORCE QUIT</h1>
+            <p>Level up your real life. One clean day at a time.</p>
+          </div>
+        </div>
+        <div class="profile-box">
+          <img id="profilePreview" class="profile-pic" alt="Profile preview" />
+          <div class="profile-fields">
+            <input id="nameInput" type="text" placeholder="Your name" maxlength="30" />
+            <input id="imageInput" type="file" accept="image/*" hidden />
+            <p class="mini-note">Click profile picture to update image</p>
+            <div class="profile-btn-group">
+              <button id="saveProfileBtn">Save Profile</button>
+              <button id="removeImageBtn" class="remove-image-btn app-hidden">Remove Image</button>
+            </div>
+          </div>
+          <div class="auth-buttons-group">
+            <button id="headerSignInBtn" class="header-auth-btn header-signin">Sign In</button>
+            <button id="headerLogInBtn" class="header-auth-btn header-login">Log In</button>
+            <button id="helpBtn" class="header-auth-btn header-help">Help</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="grid">
+        <section class="card stats-card">
+          <h2>Survival Stats</h2>
+          <div class="stat-line">
+            <span>Stopwatch</span>
+            <strong id="stopwatch">00:00:00</strong>
+          </div>
+          <div class="stat-line">
+            <span>Days Survived</span>
+            <strong id="daysSurvived">0</strong>
+          </div>
+          <div class="stat-line">
+            <span>Energy</span>
+            <strong id="energy">0.0</strong>
+          </div>
+          <div class="stat-line">
+            <span>Energy / sec</span>
+            <strong id="energyRate">0.1</strong>
+          </div>
+          <div class="stat-line">
+            <span>Login Days</span>
+            <strong id="loginDays">0</strong>
+          </div>
+          <p id="loginRewardMessage" class="mini-note"></p>
+          <div id="claimBox" class="claim-box">
+            <div class="claim-left">
+              <span class="claim-icon">🎁</span>
+              <div class="claim-text-wrap">
+                <p class="claim-title">Loot Chest Ready</p>
+                <span id="claimAmountText"></span>
+              </div>
+            </div>
+            <button id="claimEnergyBtn" class="claim-btn">Claim Loot</button>
+          </div>
+          <div class="sound-toggle-row">
+            <button id="notificationSoundToggleBtn" class="sound-toggle-btn">Notifications: On</button>
+          </div>
+          <button id="relapseBtn" class="relapse-btn">🔄 Relapse</button>
+        </section>
+
+        <section class="card">
+          <h2>Set Quit Date & Time</h2>
+          <label for="quitDateTime">When did you quit?</label>
+          <input id="quitDateTime" type="datetime-local" step="60" />
+          <button id="startJourneyBtn">Start / Update Journey</button>
+          <p class="mini-note">
+            Tip: You can update this only with honesty. You are building your future.
+          </p>
+        </section>
+
+        <section class="card">
+          <h2>Daily Mission (3 Tasks)</h2>
+          <ul id="taskList" class="task-list"></ul>
+        </section>
+
+        <section class="card">
+          <h2>Motivation Boost</h2>
+          <p id="motivationText" class="motivation"></p>
+          <button id="newMotivationBtn">New Motivation</button>
+        </section>
+
+        <section class="card rewards-card">
+          <h2>Rewards</h2>
+          <div id="rewardStatus"></div>
+        </section>
+
+        <section class="card">
+          <h2>Survival Calendar</h2>
+          <div class="calendar-header">
+            <button id="prevMonthBtn">&lt;</button>
+            <h3 id="calendarTitle"></h3>
+            <button id="nextMonthBtn">&gt;</button>
+          </div>
+          <div id="calendarGrid" class="calendar-grid"></div>
+        </section>
+      </main>
+
+      <div id="offlineGainToast" class="offline-gain-toast"></div>
+      <div id="energyBoostContainer" class="energy-boost-container"></div>
+
+      <!-- Relapse Confirmation Modal -->
+      <div id="relapseModal" class="modal-backdrop app-hidden">
+        <div class="modal-card">
+          <h3>Are you sure?</h3>
+          <p class="mini-note" style="margin-top: 8px; margin-bottom: 12px;">This will reset your progress. Don't give up on yourself!</p>
+          <div class="modal-actions">
+            <button id="relapseNoBtn" class="modal-btn-cancel">Cancel</button>
+            <button id="relapseYesBtn" class="modal-btn-confirm">Reset & Try Again</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Motivational Pop-up Modal -->
+      <div id="motivationModal" class="modal-backdrop app-hidden">
+        <div class="modal-card motivation-popup">
+          <h3>💪 You've Got This!</h3>
+          <p id="motivationPopupText" class="mini-note" style="margin-top: 12px; margin-bottom: 16px; font-size: 0.95rem;"></p>
+          <button id="motivationCloseBtn" class="modal-btn-confirm">Keep Going</button>
+        </div>
+      </div>
+
+      <!-- Distracted Modal (Volcano) -->
+      <div id="distractedModal" class="modal-backdrop app-hidden">
+        <div class="modal-card">
+          <h3>You got distracted?</h3>
+          <p class="mini-note" style="margin-top: 8px; margin-bottom: 12px;">Ready to reset and start fresh?</p>
+          <div class="modal-actions">
+            <button id="distractedNoBtn" class="modal-btn-cancel">No, I'm Still Good</button>
+            <button id="distractedYesBtn" class="modal-btn-confirm">Yes, Reset Everything</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Help Modal -->
+      <div id="helpModal" class="modal-backdrop app-hidden">
+        <div class="modal-card help-modal">
+          <h3>Help & About Force Quit</h3>
+          <div class="help-content">
+            <p><strong>What is Force Quit?</strong> This app is designed to help you quit porn addiction by gamifying your journey. Track your progress, stay motivated, and build healthier habits one day at a time.</p>
+            <p><strong>Key Features:</strong></p>
+            <ul>
+              <li><strong>Authentication:</strong> Sign up, log in, or continue as a guest to save your progress.</li>
+              <li><strong>Profile:</strong> Set your name and profile picture to personalize your experience.</li>
+              <li><strong>Survival Stats:</strong> Monitor your stopwatch, days survived, energy level, energy per second, and login streaks. Claim rewards for consistent logins.</li>
+              <li><strong>Quit Date:</strong> Set or update your quit date and time honestly to track your journey.</li>
+              <li><strong>Daily Missions:</strong> Complete 3 tasks each day. Finishing them increases your energy rate, helping you progress faster.</li>
+              <li><strong>Motivation Boost:</strong> Get random motivational messages to stay inspired.</li>
+              <li><strong>Rewards:</strong> Unlock achievements based on your milestones.</li>
+              <li><strong>Survival Calendar:</strong> Visualize your clean days on a calendar.</li>
+              <li><strong>Relapse & Reset:</strong> If you relapse, reset your progress and try again—honesty is key.</li>
+            </ul>
+            <p><strong>Tip:</strong> Completing daily tasks boosts your energy rate, making it easier to level up. Stay consistent and build your future!</p>
+          </div>
+          <button id="helpCloseBtn" class="modal-btn-confirm">Got It</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
